@@ -2,12 +2,10 @@
 
 namespace TC\Http\Controllers;
 
-use http\Env\Response;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use TC\Models\AdPetAbandoned;
 use TC\Models\Pet;
+use TC\Models\PhotosPet;
 
 class ControllerAdAbandonedPet extends Controller
 {
@@ -105,33 +103,25 @@ class ControllerAdAbandonedPet extends Controller
         //
     }
 
-    public function post_upload()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function post_upload(Request $request)
     {
 
-        $input = Input::all();
-        $rules = array(
-            'file' => 'image|max:3000',
-        );
+        
+        $image = $request->file('file');
+        $imageName = time() . $image->getClientOriginalName();
+        $image->move(public_path('images'), $imageName);
 
-        $validation = Validator::make($input, $rules);
+        $photo = new PhotosPet();
+        $photo->url = $imageName;
+        $photo->save();
 
-        if ($validation->fails()) {
-            return Response::make($validation->errors->first(), 400);
-        }
 
-        $file = Input::file('file');
+        return response()->json(['success' => $imageName]);
 
-        $extension = File::extension($file['name']);
-        $directory = path('public') . 'uploads/' . sha1(time());
-        $filename = sha1(time() . time()) . ".{$extension}";
-
-        $upload_success = Input::upload('file', $directory, $filename);
-
-        if ($upload_success) {
-            return Response::json('success', 200);
-        } else {
-            return Response::json('error', 400);
-        }
     }
 
 }

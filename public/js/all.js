@@ -24,4 +24,12 @@ $( document ).ready(function(){
             $('#rootwizard .progress-bar').css({width:$percent+'%'});
         }});
     });
+    function sub() {
+        document.getElementById('form').submit();
+    }
+
+    Dropzone.options.imageUpload = {
+        maxFilesize: 1,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif"
+    };
 });

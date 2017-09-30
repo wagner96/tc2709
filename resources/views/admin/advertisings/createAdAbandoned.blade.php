@@ -2,8 +2,7 @@
 
 @section('content')
     @include('errors._check')
-
-    {{Form::open(array('route'=>'admin.advertisings.createAdAbandoned.store',  'name'=>'form', 'data-toggle'=>'validator'))}}
+    {{Form::open(array('route'=>'admin.advertisings.createAdAbandoned.store',  'name'=>'form', 'data-toggle'=>'validator', 'id'=>'form'))}}
     <div class="container">
         <div class="form-horizontal">
             <h1>Adoção de Animal</h1>
@@ -69,32 +68,32 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         {{Form::select('state_pet', array('AC'=>'Acre',
-                                    'AL'=>'Alagoas',
-                                    'AP'=>'Amapá',
-                                    'AM'=>'Amazonas',
-                                    'BA'=>'Bahia',
-                                    'CE'=>'Ceará',
-                                    'DF'=>'Distrito Federal',
-                                    'ES'=>'Espírito Santo',
-                                    'GO'=>'Goiás',
-                                    'MA'=>'Maranhão',
-                                    'MT'=>'Mato Grosso',
-                                    'MS'=>'Mato Grosso do Sul',
-                                    'MG'=>'Minas Gerais',
-                                    'PA'=>'Pará',
-                                    'PB'=>'Paraíba',
-                                    'PR'=>'Paraná',
-                                    'PE'=>'Pernambuco',
-                                    'PI'=>'Piauí',
-                                    'RJ'=>'Rio de Janeiro',
-                                    'RN'=>'Rio Grande do Norte',
-                                    'RS'=>'Rio Grande do Sul',
-                                    'RO'=>'Rondônia',
-                                    'RR'=>'Roraima',
-                                    'SC'=>'Santa Catarina',
-                                    'SP'=>'São Paulo',
-                                    'SE'=>'Sergipe',
-                                    'TO'=>'Tocantins'),null, ['class' => 'form-control'])}}
+                        'AL'=>'Alagoas',
+                        'AP'=>'Amapá',
+                        'AM'=>'Amazonas',
+                        'BA'=>'Bahia',
+                        'CE'=>'Ceará',
+                        'DF'=>'Distrito Federal',
+                        'ES'=>'Espírito Santo',
+                        'GO'=>'Goiás',
+                        'MA'=>'Maranhão',
+                        'MT'=>'Mato Grosso',
+                        'MS'=>'Mato Grosso do Sul',
+                        'MG'=>'Minas Gerais',
+                        'PA'=>'Pará',
+                        'PB'=>'Paraíba',
+                        'PR'=>'Paraná',
+                        'PE'=>'Pernambuco',
+                        'PI'=>'Piauí',
+                        'RJ'=>'Rio de Janeiro',
+                        'RN'=>'Rio Grande do Norte',
+                        'RS'=>'Rio Grande do Sul',
+                        'RO'=>'Rondônia',
+                        'RR'=>'Roraima',
+                        'SC'=>'Santa Catarina',
+                        'SP'=>'São Paulo',
+                        'SE'=>'Sergipe',
+                        'TO'=>'Tocantins'),null, ['class' => 'form-control'])}}
                     </div>
                 </div>
             </div>
@@ -112,44 +111,47 @@
                 {{ Form::label('personality_pet', 'Personalidade do animal',array('class'=>'col-md-4 control-label'))}}
                 <div class="col-md-4 inputGroupContainer">
                     <div class="input-group">
-                                        <span class="input-group-addon"><i
-                                                    class="glyphicon glyphicon-pencil"></i></span>
+    <span class="input-group-addon"><i
+                class="glyphicon glyphicon-pencil"></i></span>
                         {{Form::textarea('personality_pet','', array('placeholder'=>'Personalidade do animal','class' => 'form-control', 'cols'=>'5','rows'=>'5' ))}}
                     </div>
                 </div>
             </div>
+            {{Form::close()}}
+
+
             <div class="form-group">
                 <label for="name" class="col-md-4 control-label">Fotos do animal</label>
 
                 <div class="col-md-4 inputGroupContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                        {!! Form::open([ 'route' => [ 'admin.advertisings.createAdAbandoned.post_upload' ], 'files' => true, 'enctype' => 'multipart/form-data', 'class' => 'dropzone', 'id' => 'image-upload', 'name'=>'upload' ]) !!}
 
-                        <div class="dropzone" action="createAdAsbandoned/post_upload" id="addImages">
-
-                            {{csrf_field()}}
-                            <input type="hidden" name="gallery_id" value="">
-
-                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
-
-
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-3 pull-right">
 
-                    {{Form::submit('Salvar', ['class'=>'btn btn-primary'])}}
-                    {{Form::close()}}
+                    {{Form::submit('Salvar', ['class'=>'btn btn-primary', 'form'=>'form', 'onclick'=>'sub()'])}}
+
                 </div>
             </div>
+
         </div>
     </div>
 
-    <script type="text/javascript">
-        var myDropzone = new Dropzone("#addImages", {url: "createAdAsbandoned/post_upload"});
 
-    </script>
+
+    {{--<div class="row">--}}
+    {{--<div class="col-md-12">--}}
+    {{--{!! Form::open([ 'route' => [ 'admin.advertisings.createAdAbandoned.post_upload' ], 'files' => true, 'enctype' => 'multipart/form-data', 'class' => 'dropzone', 'id' => 'image-upload' ]) !!}--}}
+
+    {{--{!! Form::close() !!}--}}
+    {{--</div>--}}
+    {{--</div>--}}
 
 @stop
 
